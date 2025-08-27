@@ -1,2 +1,2 @@
 # PhysComp_August
-Physical Computing Class Repository
+Fall 2025 Physical Computing Class Repository
