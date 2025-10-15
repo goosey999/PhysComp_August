@@ -36,14 +36,14 @@ pinMode(buttonPin,INPUT_PULLUP);
 
 analogReadResolution(12);//alocates number of bits for analog read - max value of 4095
 
-Serial.begin(115200);
 Serial.println("Initiating!");
 
 }
 
 void loop() {
 float knobValue = analogRead(potPin);
-
+Serial.println(knobValue);
+Serial.println(!digitalRead(buttonPin));
 
 if (!digitalRead(buttonPin) == 1){ //set sequence # to position of knob after pressing the button
 
