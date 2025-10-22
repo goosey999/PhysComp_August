@@ -10,76 +10,52 @@ Create A 3x3 grid of LEDS that can be indiviually toggled on and off through the
 
 
 */
+//add Debounce protection?
 
+const int cursorBrightness = 127;
 const int buttonPin = 1;
 const int potPin = 2;
 
-bool ledMatrix[] = {0,0,0,0,0,0,0,0,0};
-
-//Row 1
-const int ledPin0 = 4;
-const int ledPin1 = 5;
-const int ledPin2 = 6;
-//Row 2
-const int ledPin3 = 7;
-const int ledPin4 = 15;
-const int ledPin5 = 16;
-
-//Row 3
-const int ledPin6 = 17;
-const int ledPin7 = 18;
-const int ledPin8 = 8;
+bool ledMatrix[] = {0,0,0,0,0,0,0,0,0}; //LED digital value
+const int ledPinArray[] = {4,5,6,7,15,16,17,18,8}; //array of led arduino pins
 
 void setup() {
   Serial.begin(115200);
-  //Row 1
-  pinMode(ledPin0, OUTPUT);
-  pinMode(ledPin1, OUTPUT);
-  pinMode(ledPin2, OUTPUT);
-  //Row 2
-  pinMode(ledPin3, OUTPUT);
-  pinMode(ledPin4, OUTPUT);
-  pinMode(ledPin5, OUTPUT);
-  //Row 3
-  pinMode(ledPin6, OUTPUT);
-  pinMode(ledPin7, OUTPUT);
-  pinMode(ledPin8, OUTPUT);
 
+  //set led Pins to OUTPUT
+  for (int i = 0; i <= 8; i++){
+    pinMode(ledPinArray[i], OUTPUT);
+  }
+
+  //set button pin to INPUT Pullup (remember values are reveresed)
   pinMode(buttonPin,INPUT_PULLUP);
+
+  //set read resolution (12bit means 0-4095)
   analogReadResolution(12);
 
   Serial.println("Initiating!");
 }
 
-void loop() {
 
-  int knobValue = map(analogRead(potPin),0,4095,0,8);//maps pot value to value between 0 and 8
+void loop() {
+  //map pot value to value between 0 and 8
+  int knobValue = map(analogRead(potPin),0,4095,0,8);
   bool buttonValue = !digitalRead(buttonPin);
   Serial.println(knobValue);
-  Serial.println(buttonValue);  
-  //Could be replaced with a for loop eventually
-  //Row 1
-  digitalWrite(ledPin0,ledMatrix[0]);
-  digitalWrite(ledPin1,ledMatrix[1]);
-  digitalWrite(ledPin2,ledMatrix[2]);
-  //Row 2
-  digitalWrite(ledPin3,ledMatrix[3]);
-  digitalWrite(ledPin4,ledMatrix[4]);
-  digitalWrite(ledPin5,ledMatrix[5]);
-  //Row 3
-  digitalWrite(ledPin6,ledMatrix[6]);
-  digitalWrite(ledPin7,ledMatrix[7]);
-  digitalWrite(ledPin8,ledMatrix[8]);
+  Serial.println(buttonValue);    
 
-  // for (int i = 0; i <= 8; i++){
-  //   if (knobValue != i) {
+  
+  for (int i = 0; i <= 8; i++){
+    if (knobValue != i){
+      //set led pin to value stored in array
+      digitalWrite(ledPinArray[i],ledMatrix[i]);
 
-
-  //   } else {
-  //     analogWrite()
-  //   }
-
-  // }
+    } else{
+      Serial.printf("LED %i is set to %b ",knobValue,ledMatrix[i]);
+      //dim currently selected led
+      analogWrite(ledPinArray[i],cursorBrightness); 
+    }
+  }
 
   //toggle value of currently selected LED when button is pressed
   if (buttonValue = true) {
