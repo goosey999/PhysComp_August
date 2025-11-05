@@ -12,11 +12,11 @@ Create A 3x3 grid of LEDS that can be indiviually toggled on and off through the
 */
 //add Debounce protection?
 
-const int cursorBrightness = 127;
+//const int cursorBrightness = 127;
 const int buttonPin = 40;
-const int potPin = 39;
+const int potPin = 10;
 
-bool ledMatrix[] = {1,1,1,1,1,1,1,1,1}; //LED digital value
+bool ledMatrix[] = {0,0,0,0,0,0,0,0,0}; //LED digital value
 
 int ledRowPins[] = {1,2,42};
 
@@ -50,10 +50,28 @@ void setup() {
 
 void loop() {
   //map pot value to value between 0 and 8
+
   int knobValue = map(analogRead(potPin),0,4095,0,8);
   bool buttonValue = !digitalRead(buttonPin);
+  //Serial.println(analogRead(potPin));
   Serial.println(knobValue);
   Serial.println(buttonValue);    
+
+  Serial.print(ledMatrix[0]);
+  Serial.print(ledMatrix[1]);
+  Serial.print(ledMatrix[2]);
+  Serial.print(ledMatrix[3]);
+  Serial.print(ledMatrix[4]);
+  Serial.print(ledMatrix[5]);
+  Serial.print(ledMatrix[6]);
+  Serial.print(ledMatrix[7]);
+  Serial.println(ledMatrix[8]);
+
+
+
+
+
+
 
   multiplexer(ledMatrix);
   
