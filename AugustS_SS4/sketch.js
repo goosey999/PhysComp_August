@@ -2,7 +2,7 @@
 
 
 let serial; // declare variable for an instance of the serialport library
-let portName = '/dev/tty.usbserial-213320';  // fill in your serial port name here
+let portName = '/dev/tty.usbserial-2110';  // fill in your serial port name here
 let options = { baudRate: 9600}; // change the baud rate to match your Arduino code
 
 let inData = 0; // variable for storing incoming serial data
@@ -60,8 +60,8 @@ function draw() //  draw function loops forever at frame rate
   if(keyIsDown(DOWN_ARROW)){
     yPos +=5;
   }
-  //xPos = map(sensors[2],0,255,0,width); //map pot to x axis
-  //yPos = map(sensors[3],0,255,0,height); //map pot to y axis
+  xPos = map(sensors[2],0,1023,0,width); //map pot to x axis
+  yPos = map(sensors[3],0,1023,0,height); //map pot to y axis
 
   if (sensors[0] || keyIsDown(90)){ // if button 1 is pressed...
     r = random(0,255);
@@ -74,7 +74,7 @@ function draw() //  draw function loops forever at frame rate
   }
 
   
-  text(sensors, width/2, height - 100); // display incoming serial data as text
+  //text(sensors, width/2, height - 100); // display incoming serial data as text
 }
 
 function printList(portList) // gets called when the serial.list() function is called

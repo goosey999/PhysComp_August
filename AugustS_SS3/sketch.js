@@ -1,7 +1,7 @@
 //Flappy ellipse
 
 let serial; // declare variable for an instance of the serialport library
-let portName = '/dev/tty.usbserial-2140';  // fill in your serial port name here
+let portName = '/dev/tty.usbserial-2110';  // fill in your serial port name here
 let options = { baudRate: 9600}; // change the baud rate to match your Arduino code
 
 let inData = 0; // variable for storing incoming serial data
@@ -16,7 +16,7 @@ let positionY = 400;
 let scrollSpeed = 2;
 let rectX = 450;
 let gapY = 400;
-let playerS = 100;
+let playerS = 80;
 let score = 0;
 
 function setup() //setup function runs once at beginning
@@ -65,6 +65,7 @@ function draw() //draw function loops forever at frame rate
 
   }  
 
+  // scrollSpeed = score + 1
 
   rectX -= scrollSpeed;
     if(rectX < -50){
